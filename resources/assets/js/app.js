@@ -1,7 +1,15 @@
-require('./bootstrap')
-import React from 'react'
+require('./bootstrap');
+import React, { Component } from 'react'
 import { render } from 'react-dom'
 
-import Example from './components/Example.jsx'
+class Welcome extends Component {
+  render() {
+    return (
+        <div className="container">
+            <h1 className="center">Hello</h1>
+        </div>
+    )
+  }
+}
 
-render(<Example />, document.getElementById('example'))
+render(<Welcome />, document.getElementById('example'))
