@@ -22,5 +22,7 @@
         "react": "^15.6.1",
         "react-dom": "^15.6.1"
     },
-    "dependencies": {}
+    "dependencies": {
+        "react-router-dom": "^4.2.2"
+    }
 }

@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { Link, NavLink } from 'react-router-dom'
 
 export default class Master extends Component {
   render() {
@@ -20,15 +21,9 @@ export default class Master extends Component {
 
             <div className="collapse navbar-collapse" id="navbarColor01">
               <ul className="navbar-nav mr-auto">
-                <li className="nav-item active">
-                  <a className="nav-link" href="#">Home <span className="sr-only">(current)</span></a>
-                </li>
-                <li className="nav-item">
-                  <a className="nav-link" href="#">About</a>
-                </li>
-                <li className="nav-item">
-                  <a className="nav-link" href="#">Contact</a>
-                </li>
+                <NavLink exact to="/" className="nav-link">Home <span className="sr-only">(current)</span></NavLink>
+                <NavLink to="/about" className="nav-link">About</NavLink>
+                <NavLink to="/contact" className="nav-link">Contact</NavLink>
               </ul>
             </div>
           </nav>
