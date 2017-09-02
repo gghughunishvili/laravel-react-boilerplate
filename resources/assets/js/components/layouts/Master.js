@@ -5,7 +5,7 @@ export default class Master extends Component {
     return (
       <div>
         <div className="header">
-          <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
+          <nav className="navbar navbar-expand-lg navbar-dark bg-primary">
             <a className="navbar-brand" href="/">App</a>
             <button
               className="navbar-toggler"
