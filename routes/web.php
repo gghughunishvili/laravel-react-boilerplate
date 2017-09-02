@@ -10,6 +10,6 @@
 | contains the "web" middleware group. Now create something great!
 |
  */
-Route::any('{catchall}', function () {
+Route::get('{catchall}', function () {
     return view('welcome');
 })->where('catchall', '(.*)');
