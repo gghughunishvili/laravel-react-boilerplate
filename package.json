@@ -12,16 +12,15 @@
     "devDependencies": {
         "axios": "^0.16.2",
         "babel-preset-react": "^6.23.0",
-        "bootstrap-sass": "^3.3.7",
+        "bootstrap": "^4.0.0-beta",
         "cross-env": "^5.0.1",
         "jquery": "^3.1.1",
         "laravel-mix": "^1.0",
         "lodash": "^4.17.4",
+        "popper.js": "^1.12.5",
+        "prop-types": "^15.5.10",
         "react": "^15.6.1",
         "react-dom": "^15.6.1"
     },
-    "dependencies": {
-        "prop-types": "^15.5.10",
-        "react-router": "^2.8.1"
-    }
+    "dependencies": {}
 }
