@@ -7,7 +7,7 @@ export default class Master extends Component {
       <div>
         <div className="header">
           <nav className="navbar navbar-expand-lg navbar-dark bg-primary">
-            <a className="navbar-brand" href="/">App</a>
+            <Link to="/" className="navbar-brand">App</Link>
             <button
               className="navbar-toggler"
               type="button"
@@ -24,6 +24,8 @@ export default class Master extends Component {
                 <NavLink exact to="/" className="nav-link">Home <span className="sr-only">(current)</span></NavLink>
                 <NavLink to="/about" className="nav-link">About</NavLink>
                 <NavLink to="/contact" className="nav-link">Contact</NavLink>
+                <NavLink to="/register" className="nav-link">Register</NavLink>
+                <NavLink to="/login" className="nav-link">Login</NavLink>
               </ul>
             </div>
           </nav>
