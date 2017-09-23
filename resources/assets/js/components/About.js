@@ -3,7 +3,7 @@ import React, { Component } from 'react'
 import Master from './layouts/Master'
 
 class About extends Component {
-  render() {
+  render () {
     return (
       <Master>
         <div className="container">
