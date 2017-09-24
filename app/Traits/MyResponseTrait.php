@@ -39,36 +39,6 @@ trait MyResponseTrait
     }
 
     /**
-     * Response with errors
-     * @param      <type>  $message  The message
-     * @return     <type>  ( description_of_the_return_value )
-     */
-    public function respondWithError($message)
-    {
-        return $this->respond([
-            'error' => [
-                'message' => $message,
-                'status_code' => $this->getStatusCode(),
-            ],
-        ]);
-    }
-
-    /**
-     * Response with success
-     * @param      <type>  $message  The message
-     * @return     <type>  ( description_of_the_return_value )
-     */
-    public function respondWithSuccess($message)
-    {
-        return $this->respond([
-            'success' => [
-                'message' => $message,
-                'status_code' => $this->getStatusCode(),
-            ],
-        ]);
-    }
-
-    /**
      * Returns success status that shoul be used for GET, PUT, PATCH or DELETE
      * and POST that doesn't create object.
      * @param      string $message The message
@@ -76,7 +46,7 @@ trait MyResponseTrait
      */
     public function respondSuccess($message = 'Success!')
     {
-        return $this->setStatusCode(200)->respondWithSuccess($message);
+        return $this->setStatusCode(200)->respond($message);
     }
 
     /**
@@ -86,7 +56,7 @@ trait MyResponseTrait
      */
     public function respondCreated($message = 'Created!')
     {
-        return $this->setStatusCode(201)->respondWithSuccess($message);
+        return $this->setStatusCode(201)->respond($message);
     }
 
     /**
@@ -96,7 +66,7 @@ trait MyResponseTrait
      */
     public function respondAccepted($message = 'Accepted!')
     {
-        return $this->setStatusCode(202)->respondWithSuccess($message);
+        return $this->setStatusCode(202)->respond($message);
     }
 
     /**
@@ -115,7 +85,7 @@ trait MyResponseTrait
      */
     public function respondErrorBadRequest($message = "Bad Request!")
     {
-        return $this->setStatusCode(400)->respondWithError($message);
+        return $this->setStatusCode(400)->respond($message);
     }
 
     /**
@@ -125,7 +95,7 @@ trait MyResponseTrait
      */
     public function respondError($message = 'General Error!')
     {
-        return $this->setStatusCode(400)->respondWithError($message);
+        return $this->setStatusCode(400)->respond($message);
     }
 
     /**
@@ -135,7 +105,7 @@ trait MyResponseTrait
      */
     public function respondUnauthorized($message = 'Unauthorized.')
     {
-        return $this->setStatusCode(401)->respondWithError($message);
+        return $this->setStatusCode(401)->respond($message);
     }
 
     /**
@@ -145,7 +115,7 @@ trait MyResponseTrait
      */
     public function respondForbidden($message = 'Forbidden!')
     {
-        return $this->setStatusCode(403)->respondWithError($message);
+        return $this->setStatusCode(403)->respond($message);
     }
 
     /**
@@ -155,7 +125,17 @@ trait MyResponseTrait
      */
     public function respondErrorNotFound($message = 'Not Found!')
     {
-        return $this->setStatusCode(404)->respondWithError($message);
+        return $this->setStatusCode(404)->respond($message);
+    }
+
+    /**
+     * Unauthorized response
+     * @param      string $message The message
+     * @return     json  ( description_of_the_return_value )
+     */
+    public function respondErrorValidation($errors = [])
+    {
+        return $this->setStatusCode(422)->respond($errors);
     }
 
     /**
@@ -165,6 +145,6 @@ trait MyResponseTrait
      */
     public function respondErrorInternal($message = 'Internal Error!')
     {
-        return $this->setStatusCode(500)->respondWithError($message);
+        return $this->setStatusCode(500)->respond($message);
     }
 }

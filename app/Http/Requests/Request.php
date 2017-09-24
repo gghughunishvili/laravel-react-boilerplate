@@ -6,6 +6,7 @@ use App\Exceptions\ValidationException;
 use App\Traits\MyResponseTrait;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Contracts\Validation\Validator;
 
 abstract class Request extends FormRequest
 {
