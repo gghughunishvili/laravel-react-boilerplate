@@ -4,10 +4,12 @@ namespace App\Services;
 
 use App\Exceptions\GeneralException;
 use App\Models\User;
+use App\Services\Traits\UserServiceTrait;
 use Symfony\Component\HttpFoundation\ParameterBag;
 
 class UserService extends AppService
 {
+    use UserServiceTrait, RoleServiceTrait;
     /**
      * Create a new user instance after a valid registration.
      *
@@ -32,11 +34,7 @@ class UserService extends AppService
      */
     public function get(string $id)
     {
-        $user = $this->checkingForExistingUser($id);
-
-        if ($user->status == 'passive' && !auth()->user()->may('get-passive-user')) {
-            throw new ForbiddenException("You don't have permission to get passive user");
-        }
+        $user = $this->checkPermissionAndGetExistingUser($id);
 
         return $user;
     }
@@ -65,7 +63,7 @@ class UserService extends AppService
      */
     public function update(string $id, ParameterBag $params)
     {
-        $user = $this->checkingForExistingUser($id);
+        $user = $this->checkPermissionAndGetExistingUser($id);
 
         if ($params->has('name')) {
             $user->name = $params->get('name');
@@ -87,7 +85,7 @@ class UserService extends AppService
      */
     public function delete(string $id)
     {
-        $user = $this->checkingForExistingUser($id);
+        $user = $this->checkPermissionAndGetExistingUser($id);
 
         $user->delete();
     }
@@ -103,8 +101,8 @@ class UserService extends AppService
 
     public function attachRole(string $user_id, string $role_id)
     {
-        $user = $this->checkingForExistingUser($user_id);
-        $role = $this->checkingForExistingRole($role_id);
+        $user = $this->checkPermissionAndGetExistingUser($user_id);
+        $role = $this->checkPermissionAndGetExistingRole($role_id);
 
         if ($user->hasRole($role->name)) {
             throw new GeneralException("The role is already attached to the user");
@@ -117,8 +115,8 @@ class UserService extends AppService
 
     public function detachRole(string $user_id, string $role_id)
     {
-        $user = $this->checkingForExistingUser($user_id);
-        $role = $this->checkingForExistingRole($role_id);
+        $user = $this->checkPermissionAndGetExistingUser($user_id);
+        $role = $this->checkPermissionAndGetExistingRole($role_id);
 
         if (!$user->hasRole($role->name)) {
             throw new GeneralException("The role isn't attached to the user");
