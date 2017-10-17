@@ -23,5 +23,6 @@ Route::group(['prefix' => 'v1', 'namespace' => 'Api\V1'], function ()
     {
         Route::patch('oauth/token', 'AccessTokenController@revokeToken');
         Route::get('users/me', 'UserController@me');
+        Route::patch('users/{id}', 'UserController@update');
     });
 });
