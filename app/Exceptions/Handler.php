@@ -2,6 +2,8 @@
 
 namespace App\Exceptions;
 
+use App\Exceptions\ForbiddenException;
+use App\Exceptions\ResourceNotFoundException;
 use App\Exceptions\ValidationException;
 use App\Traits\MyResponseTrait;
 use Exception;
@@ -55,6 +57,18 @@ class Handler extends ExceptionHandler
             $error = $exception->getMessage();
             $error_array = $this->_customValidationMessage(json_decode($error, true));
             return $this->respondErrorValidation($error_array);
+        }
+
+        if ($e instanceof ResourceNotFoundException) {
+            return $this->respondErrorNotFound($e->getMessage());
+        }
+
+        if ($e instanceof ForbiddenException) {
+                return $this->respondForbidden($e->getMessage());
+            }
+
+        if ($e instanceof GeneralException) {
+            return $this->respondError($e->getMessage());
         }
 
         return parent::render($request, $exception);
