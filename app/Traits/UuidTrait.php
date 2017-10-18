@@ -13,6 +13,12 @@ trait UuidTrait
     {
         parent::boot();
 
+        static::creating(function ($model) {
+            if (!$model->{$model->getKeyName()}) {
+                $model->{$model->getKeyName()} = Uuid::generate();
+            }
+        });
+
         static::saving(function ($model) {
             if (!$model->{$model->getKeyName()}) {
                 $model->{$model->getKeyName()} = Uuid::generate();
