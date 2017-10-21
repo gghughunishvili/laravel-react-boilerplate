@@ -16,7 +16,7 @@ class UsersTableSeeder extends Seeder
     {
         // Admin User
         $admin = (object) config('main.seeder.admin');
-        $user = User::getById($admin->id);
+        $user = User::find($admin->id);
         if (!$user) {
             $user = new User;
             $user->id = $admin->id;
@@ -33,7 +33,7 @@ class UsersTableSeeder extends Seeder
 
         // Test User
         $test = (object) config('main.seeder.test');
-        $user = User::getById($test->id);
+        $user = User::find($test->id);
         if (!$user) {
             $user = new User;
             $user->id = $test->id;
@@ -49,7 +49,7 @@ class UsersTableSeeder extends Seeder
         $user->save();
 
         // Testing User Passive
-        $user = User::getById("1ab925c1-fd55-4ceb-ac1d-2d09bdbef049");
+        $user = User::find("1ab925c1-fd55-4ceb-ac1d-2d09bdbef049");
         if (!$user) {
             $user = new User;
             $user->id = "1ab925c1-fd55-4ceb-ac1d-2d09bdbef049";
@@ -65,7 +65,7 @@ class UsersTableSeeder extends Seeder
         $user->save();
 
         // Testing User Pending
-        $user = User::getById("3ead8367-ba50-4f72-bc33-aca95fcdd0d1");
+        $user = User::find("3ead8367-ba50-4f72-bc33-aca95fcdd0d1");
         if (!$user) {
             $user = new User;
             $user->id = "3ead8367-ba50-4f72-bc33-aca95fcdd0d1";

@@ -2,10 +2,12 @@
 
 namespace App\Models;
 
+use App\Traits\UuidTrait;
 use Zizaco\Entrust\EntrustPermission;
 
 class Permission extends EntrustPermission
 {
+    use UuidTrait;
 
     public $incrementing = false;
 
@@ -17,11 +19,6 @@ class Permission extends EntrustPermission
     protected $fillable = [
         'name', 'display_name', 'description',
     ];
-
-    public static function getById($id)
-    {
-        return Permission::where('id', $id)->first();
-    }
 
     public static function getByName($name)
     {

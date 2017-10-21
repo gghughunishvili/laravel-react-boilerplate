@@ -15,7 +15,7 @@ class RolesTableSeeder extends Seeder
     public function run()
     {
         $admin_role_id = config('main.seeder.admin.role_id');
-        $role = Role::getById($admin_role_id);
+        $role = Role::find($admin_role_id);
         if (!$role) {
             $role = new Role;
             $role->id = $admin_role_id;
