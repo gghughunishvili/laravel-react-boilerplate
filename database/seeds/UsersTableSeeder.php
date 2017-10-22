@@ -24,6 +24,7 @@ class UsersTableSeeder extends Seeder
         $user->fill([
             'name' => $admin->name,
             'email' => $admin->email,
+            'username' => 'admin',
             'password' => bcrypt($admin->password),
             'status' => 'active',
             'created_at' => Carbon::now(),
@@ -41,6 +42,7 @@ class UsersTableSeeder extends Seeder
         $user->fill([
             'name' => $test->name,
             'email' => $test->email,
+            'username' => 'test',
             'password' => bcrypt($test->password),
             'status' => 'active',
             'created_at' => Carbon::now(),
@@ -57,6 +59,7 @@ class UsersTableSeeder extends Seeder
         $user->fill([
             'name' => Faker::create()->name,
             'email' => 'passive@example.com',
+            'username' => 'passive',
             'password' => bcrypt('123456'),
             'status' => 'passive',
             'created_at' => Carbon::now(),
@@ -73,6 +76,7 @@ class UsersTableSeeder extends Seeder
         $user->fill([
             'name' => Faker::create()->name,
             'email' => 'pending@example.com',
+            'username' => 'pending',
             'password' => bcrypt('123456'),
             'status' => 'pending',
             'created_at' => Carbon::now(),
