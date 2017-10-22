@@ -6,6 +6,7 @@ use App\Traits\UuidTrait;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Passport\HasApiTokens;
+use Hash;
 
 class User extends Authenticatable
 {
@@ -36,10 +37,21 @@ class User extends Authenticatable
         'password',
     ];
 
+    /**
+     * Hash password
+     * @param $pass
+     */
+    public function setPasswordAttribute($pass)
+    {
+        if ($pass) {
+            $this->attributes['password'] = app('hash')->needsRehash($pass) ? Hash::make($pass) : $pass;
+        }
+    }
+
     public function findForPassport($identifier)
     {
         return $this->where('status', 'active')
-            ->where(function($query) use ($identifier) {
+            ->where(function ($query) use ($identifier) {
                 $query->orWhere('email', $identifier)
                     ->orWhere('username', $identifier);
             })->first();

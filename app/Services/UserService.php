@@ -20,7 +20,6 @@ class UserService extends AppService
     {
         $user = new User;
         $user->fill($params->all());
-        $user->password = bcrypt($params->get('password'));
         $user->status = 'pending';
         $user->save();
         return $user;
