@@ -1,0 +1,203 @@
+{
+	"variables": [],
+	"info": {
+		"name": "LaravelReact",
+		"_postman_id": "41037dc9-f5e0-2e7b-470f-405d4a4b25c6",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "POSTMAN Authorization With Password",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"var settings = {",
+							"  \"async\": true,",
+							"  \"crossDomain\": true,",
+							"  \"url\": environment.api_url + \"/oauth/token\",",
+							"  \"method\": \"POST\",",
+							"  'data' : {",
+							"      grant_type: environment.auth_with_password_grant_type,",
+							"      client_id: environment.auth_with_password_client_id,",
+							"      client_secret: environment.auth_with_password_client_secret,",
+							"      username: environment.auth_with_password_username,",
+							"      password: environment.auth_with_password_password,",
+							"  }",
+							"};",
+							"",
+							"$.ajax(settings).done(function (response) {",
+							"    postman.setGlobalVariable(\"access_token\", response.access_token);",
+							"});",
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"url": "{{base_url}}/",
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "/oauth/token",
+			"request": {
+				"url": "{{api_url}}/oauth/token",
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "grant_type",
+							"value": "{{auth_with_password_grant_type}}"
+						},
+						{
+							"key": "client_id",
+							"value": "{{auth_with_password_client_id}}"
+						},
+						{
+							"key": "client_secret",
+							"value": "{{auth_with_password_client_secret}}"
+						},
+						{
+							"key": "username",
+							"value": "{{auth_with_password_username}}"
+						},
+						{
+							"key": "password",
+							"value": "{{auth_with_password_password}}"
+						}
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "/oauth/token",
+			"request": {
+				"url": "{{api_url}}/oauth/token",
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{access_token}}",
+						"description": ""
+					}
+				],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "/users/me",
+			"request": {
+				"url": "{{api_url}}/users/me",
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{access_token}}",
+						"description": ""
+					}
+				],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "/users",
+			"request": {
+				"url": "{{api_url}}/users",
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "name",
+							"value": "John Doe",
+							"description": "",
+							"type": "text"
+						},
+						{
+							"key": "username",
+							"value": "admin",
+							"description": "",
+							"type": "text"
+						},
+						{
+							"key": "email",
+							"value": "john@example.com",
+							"description": "",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "123456",
+							"description": "",
+							"type": "text"
+						},
+						{
+							"key": "password_confirmation",
+							"value": "123456",
+							"description": "",
+							"type": "text"
+						}
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "/users/{id}",
+			"request": {
+				"url": "{{api_url}}/users/some-uuid-goes-here",
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{access_token}}",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "name",
+							"value": "John Doe New",
+							"description": "",
+							"type": "text"
+						},
+						{
+							"key": "username",
+							"value": "adminn",
+							"description": "",
+							"type": "text"
+						},
+						{
+							"key": "email",
+							"value": "john2@example.com",
+							"description": "",
+							"type": "text"
+						}
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		}
+	]
+}
