@@ -15,18 +15,7 @@ class Update extends Request
      */
     public function authorize()
     {
-        $user_id = $this->route('id');
-        $user = User::getById($user_id);
-        
-        if (auth()->user()->may('update-users')) {
-            return true;
-        }
-
-        if (auth()->user()->id == $user->id) {
-            return true;
-        }
-
-        return false;
+        return true;
     }
 
     /**

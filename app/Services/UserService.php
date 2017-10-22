@@ -9,7 +9,7 @@ use Symfony\Component\HttpFoundation\ParameterBag;
 
 class UserService extends AppService
 {
-    use UserServiceTrait, RoleServiceTrait;
+    use UserServiceTrait;
     /**
      * Create a new user instance after a valid registration.
      *

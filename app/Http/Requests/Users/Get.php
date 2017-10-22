@@ -14,7 +14,7 @@ class Get extends Request
      */
     public function authorize()
     {
-        return auth()->user()->may('get-users', User::class);
+        return true;
     }
 
     /**
