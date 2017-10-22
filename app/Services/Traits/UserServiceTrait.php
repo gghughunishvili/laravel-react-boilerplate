@@ -22,14 +22,14 @@ trait UserServiceTrait
 
     protected function checkGettingPassiveUserPermission(User $user, User $actor)
     {
-        if ($user->status == 'passive' && !$actor->may('get-passive-user')) {
+        if ($user->status == 'passive') {
             throw new ForbiddenException("You don't have permission to get passive user");
         }
     }
 
     protected function checkOwnerPermission(User $user, User $actor)
     {
-        if ($user->id != $actor->id && !$actor->may('get-other-user')) {
+        if ($user->id != $actor->id) {
             throw new ForbiddenException("No permission for this user.");
         }
     }

@@ -98,32 +98,4 @@ class UserService extends AppService
     {
         return auth()->user();
     }
-
-    public function attachRole(string $user_id, string $role_id)
-    {
-        $user = $this->checkPermissionAndGetExistingUser($user_id);
-        $role = $this->checkPermissionAndGetExistingRole($role_id);
-
-        if ($user->hasRole($role->name)) {
-            throw new GeneralException("The role is already attached to the user");
-        }
-
-        $user->attachRole($role);
-
-        return $user;
-    }
-
-    public function detachRole(string $user_id, string $role_id)
-    {
-        $user = $this->checkPermissionAndGetExistingUser($user_id);
-        $role = $this->checkPermissionAndGetExistingRole($role_id);
-
-        if (!$user->hasRole($role->name)) {
-            throw new GeneralException("The role isn't attached to the user");
-        }
-
-        $user->roles()->detach($role);
-
-        return $user;
-    }
 }

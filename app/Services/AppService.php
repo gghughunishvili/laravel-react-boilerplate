@@ -24,10 +24,4 @@ abstract class AppService
         $this->database = $database;
         $this->dispatcher = $dispatcher;
     }
-
-    public function getUuid()
-    {
-        return Uuid::generate();
-    }
-
 }

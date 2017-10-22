@@ -8,7 +8,7 @@ use League\Fractal\TransformerAbstract;
 
 class UserTransformer extends TransformerAbstract
 {
-    protected $availableIncludes = ['roles', 'permissions'];
+    protected $availableIncludes = [];
     protected $defaultIncludes = [];
 
     /**
@@ -25,32 +25,5 @@ class UserTransformer extends TransformerAbstract
         ];
 
         return $data;
-    }
-
-    public function includeRoles(User $user)
-    {
-        $roles = $user->roles;
-        
-        if (is_null($roles)) {
-            return null;
-        }
-        
-        return $this->collection($roles, new RoleTransformer(), 'role');
-    }
-
-    public function includePermissions(User $user)
-    {
-        $roles = $user->roles;
-        
-        if (is_null($roles)) {
-            return null;
-        }
-        
-        $permissions = collect([]);
-        foreach ($roles as $role) {
-            $permissions = $permissions->merge($role->perms);
-        }
-        $permissions = $permissions->unique('id');
-        return $this->collection($permissions, new PermissionTransformer(), 'permission');
     }
 }
