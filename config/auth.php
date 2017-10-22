@@ -75,6 +75,8 @@ return [
         //     'table' => 'users',
         // ],
     ],
+    // Added for entrust
+    'model' => App\Models\User::class,
 
     /*
     |--------------------------------------------------------------------------
