@@ -1,5 +1,5 @@
-# laravel-react-boilerplate
+# laravel-api-boilerplate
 
-Laravel and react app boilerplate 
+Laravel api boilerplate 
 
-using latest versions of laravel and react
+using latest versions of laravel
