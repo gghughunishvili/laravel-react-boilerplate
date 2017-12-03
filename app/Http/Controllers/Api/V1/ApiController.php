@@ -12,13 +12,6 @@ use Illuminate\Routing\Controller as BaseController;
  *     basePath="/api/v1",
  *     produces={"application/json","text/html"},
  *     consumes={"application/x-www-form-urlencoded"},
- *     @SWG\SecurityScheme(
- *         securityDefinition="Bearer",
- *         type="apiKey",
- *         name="Authorization",
- *         in="header",
- *         description="Authorization with bearer",
- *     ),
  *     @SWG\Info(
  *         version="1.0.0",
  *         title="API Boilerplate",
@@ -36,7 +29,10 @@ use Illuminate\Routing\Controller as BaseController;
  *             type="string",
  *             default="message",
  *         ),
- *     )
+ *     ),
+ *     security={
+ *          {"api_key": {}}
+ *     }
  * )
  * @SWG\Tag(
  *   name="Auth",
