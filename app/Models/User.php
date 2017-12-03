@@ -50,7 +50,7 @@ class User extends Authenticatable
 
     public function findForPassport($identifier)
     {
-        return $this->where('status', 'active')
+        return $this->where('status', config('custom.user.status.active'))
             ->where(function ($query) use ($identifier) {
                 $query->orWhere('email', $identifier)
                     ->orWhere('username', $identifier);

@@ -59,16 +59,16 @@ class Handler extends ExceptionHandler
             return $this->respondErrorValidation($error_array);
         }
 
-        if ($e instanceof ResourceNotFoundException) {
-            return $this->respondErrorNotFound($e->getMessage());
+        if ($exception instanceof ResourceNotFoundException) {
+            return $this->respondErrorNotFound($exception->getMessage());
         }
 
-        if ($e instanceof ForbiddenException) {
-                return $this->respondForbidden($e->getMessage());
+        if ($exception instanceof ForbiddenException) {
+                return $this->respondForbidden($exception->getMessage());
             }
 
-        if ($e instanceof GeneralException) {
-            return $this->respondError($e->getMessage());
+        if ($exception instanceof GeneralException) {
+            return $this->respondError($exception->getMessage());
         }
 
         return parent::render($request, $exception);

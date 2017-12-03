@@ -1,5 +1,5 @@
 # laravel-api-boilerplate
 
-Laravel api boilerplate 
+Laravel api boilerplate
 
-using latest versions of laravel
+using latest version of laravel
