@@ -6,9 +6,9 @@ use Illuminate\Contracts\Console\Kernel;
 
 trait CreatesApplication
 {
-    protected $baseUrl = 'http://localhost:8000';
+    protected $oauthLoginRouteName = 'api::oauth::login';
 
-    protected $authUrl = 'api/v1/oauth/token';
+    protected $oauthLogoutRouteName = 'api::oauth::logout';
 
     protected $clientId;
 

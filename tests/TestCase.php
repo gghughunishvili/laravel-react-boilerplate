@@ -3,6 +3,7 @@
 namespace Tests;
 
 use Illuminate\Foundation\Testing\TestCase as BaseTestCase;
+use Illuminate\Foundation\Testing\TestResponse;
 
 abstract class TestCase extends BaseTestCase
 {
@@ -26,8 +27,8 @@ abstract class TestCase extends BaseTestCase
 
     protected function authAsPassive()
     {
-        $userIdentifier = env('UNIT_TEST_PENDING_USER', '');
-        $password = env('UNIT_TEST_USER_PENDING_PASSWORD', '');
+        $userIdentifier = env('UNIT_TEST_PASSIVE_USER', '');
+        $password = env('UNIT_TEST_USER_PASSIVE_PASSWORD', '');
         $response = $this->usernamePasswordSuccessfulAuth($userIdentifier, $password);
         return $response;
     }
@@ -37,7 +38,7 @@ abstract class TestCase extends BaseTestCase
         $userIdentifier = env('UNIT_TEST_USER', '');
         $password = env('UNIT_TEST_USER_PASSWORD', '');
 
-        $response = $this->post($this->authUrl, [
+        $response = $this->post(route($this->oauthLoginRouteName), [
             'client_id' => 1,
             'client_secret' => "idontknowmaybesomeinvalidclientsecret",
             'grant_type' => 'password',
@@ -53,7 +54,7 @@ abstract class TestCase extends BaseTestCase
      */
     protected function usernamePasswordSuccessfulAuth(string $userIdentifier, string $password)
     {
-        $response = $this->post($this->authUrl, [
+        $response = $this->post(route($this->oauthLoginRouteName), [
             'client_id' => $this->clientId,
             'client_secret' => $this->clientSecret,
             'grant_type' => 'password',
@@ -69,14 +70,12 @@ abstract class TestCase extends BaseTestCase
         $authResponse = $this->authAsUser();
         $accessTokenHeader = $this->parseAccessTokenFromResponseAndTranformToHeader($authResponse);
         $headers = array_merge($headers, $accessTokenHeader);
-        $response = $this->json('GET',route('api::auth::user'),[],$headers);
         return $this->json($method, $url, $data, $headers);
     }
 
     public function logoutUser($headers = [])
     {
-        $headers = array_merge($headers, $this->accessTokenHeaderFromLocalVariable());
-        $response = $this->json('PATCH', route('api::auth::logout'), [], $headers);
+        $response = $this->callAsUser('PATCH', route($this->oauthLogoutRouteName));
         return $response;
     }
 
@@ -98,7 +97,6 @@ abstract class TestCase extends BaseTestCase
     public function parseAccessTokenFromResponseAndTranformToHeader(TestResponse $response)
     {
         $this->accessToken = $this->parseAccessTokenFromResponse($response);
-
         if (is_null($this->accessToken)) {
             return [];
         }
