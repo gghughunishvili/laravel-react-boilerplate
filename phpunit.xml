@@ -9,8 +9,8 @@
          processIsolation="false"
          stopOnFailure="false">
     <testsuites>
-        <testsuite name="Feature">
-            <directory suffix="Test.php">./tests/Feature</directory>
+        <testsuite name="Features">
+            <directory suffix="Test.php">./tests/Features</directory>
         </testsuite>
 
         <testsuite name="Unit">
@@ -26,6 +26,6 @@
         <env name="APP_ENV" value="testing"/>
         <env name="CACHE_DRIVER" value="array"/>
         <env name="SESSION_DRIVER" value="array"/>
-        <env name="QUEUE_DRIVER" value="sync"/>
+        <env name="QUEUE_DRIVER" value="none"/>
     </php>
 </phpunit>
