@@ -15,7 +15,7 @@ class UsersTableSeeder extends Seeder
     public function run()
     {
         // Admin User
-        $admin = (object) config('main.seeder.admin');
+        $admin = (object) config('custom.main.seeder.admin');
         $user = User::find($admin->id);
         if (!$user) {
             $user = new User;
@@ -24,7 +24,7 @@ class UsersTableSeeder extends Seeder
         $user->fill([
             'name' => $admin->name,
             'email' => $admin->email,
-            'username' => 'admin',
+            'username' => $admin->username,
             'password' => bcrypt($admin->password),
             'status' => 'active',
             'created_at' => Carbon::now(),
@@ -33,7 +33,7 @@ class UsersTableSeeder extends Seeder
         $user->save();
 
         // Test User
-        $test = (object) config('main.seeder.test');
+        $test = (object) config('custom.main.seeder.test');
         $user = User::find($test->id);
         if (!$user) {
             $user = new User;
@@ -42,7 +42,7 @@ class UsersTableSeeder extends Seeder
         $user->fill([
             'name' => $test->name,
             'email' => $test->email,
-            'username' => 'test',
+            'username' => $test->username,
             'password' => bcrypt($test->password),
             'status' => 'active',
             'created_at' => Carbon::now(),

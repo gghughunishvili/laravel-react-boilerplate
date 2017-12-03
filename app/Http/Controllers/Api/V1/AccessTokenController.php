@@ -40,7 +40,7 @@ class AccessTokenController extends AccessTokenParentController
      *         required=true,
      *         in="formData",
      *         type="string",
-     *         default="Zzxh8l1c55OLQ5w2RVN0rcTZSqzKaSfDkc0h0nlg"
+     *         default="Hcm8ofEYEbczMedOOrSF5DxrqQbO79zJDCeqZEeT"
      *     ),
      *     @SWG\Parameter(
      *         description="Username or Email",

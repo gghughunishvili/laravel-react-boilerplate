@@ -15,9 +15,9 @@ class PassportSeeder extends Seeder
         $exitCode = Artisan::call('passport:install');
 
         DB::table('oauth_clients')
-            ->where('id', config('main.seeder.passport.client_id'))
+            ->where('id', config('custom.main.seeder.passport.client_id'))
             ->update([
-                'secret' => config('main.seeder.passport.client_secret'),
+                'secret' => config('custom.main.seeder.passport.client_secret'),
                 'personal_access_client' => 1,
                 'password_client' => 1,
                 'name' => "Laravel Based REST-API Personal Access and Password Client General"
