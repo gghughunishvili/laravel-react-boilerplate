@@ -34,7 +34,7 @@ trait UserServiceTrait
         }
     }
 
-    protected function checkPermissionAndGetExistingUser(string $id, $actor = null): User
+    protected function checkPermissionAndGetExistingUser(string $id, User $actor = null): User
     {
         if (!$actor) {
             $actor = auth()->user();
