@@ -20,6 +20,7 @@ class UserTransformer extends TransformerAbstract
         $data = [
             'id' => (string) $user->id,
             'name' => (string) $user->name,
+            'username' => (string) $user->username,
             'email' => (string) $user->email,
             'status' => (string) $user->status,
         ];
