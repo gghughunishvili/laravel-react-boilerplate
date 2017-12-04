@@ -22,6 +22,7 @@ trait UserServiceTrait
 
     protected function checkGettingPassiveUserPermission(User $user, User $actor)
     {
+        // TODO:: needs to be checked weather user has passive user permissions or not
         if ($user->status == 'passive') {
             throw new ForbiddenException("You don't have permission to get passive user");
         }
@@ -29,6 +30,7 @@ trait UserServiceTrait
 
     protected function checkOwnerPermission(User $user, User $actor)
     {
+        // TODO:: needs to be added "any" permission to find any user
         if ($user->id != $actor->id) {
             throw new ForbiddenException("No permission for this user.");
         }
