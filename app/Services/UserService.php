@@ -5,6 +5,7 @@ namespace App\Services;
 use App\Exceptions\GeneralException;
 use App\Models\User;
 use App\Services\Traits\UserServiceTrait;
+use App\Validators\User\CreateValidator;
 use Symfony\Component\HttpFoundation\ParameterBag;
 
 class UserService extends AppService
@@ -13,14 +14,17 @@ class UserService extends AppService
     /**
      * Create a new user instance after a valid registration.
      *
-     * @param  ParameterBag $params
+     * @param  CreateValidator $validator
      * @return User
      */
-    public function create(ParameterBag $params)
+    public function create(CreateValidator $validator) : User
     {
+        $validator->validate();
+        $params = $validator->getParamsBag();
+
         $user = new User;
         $user->fill($params->all());
-        $user->status = 'pending';
+        $user->status = config('custom.user.status.pending');
         $user->save();
         return $user;
     }

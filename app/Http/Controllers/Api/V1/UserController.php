@@ -2,15 +2,10 @@
 
 namespace App\Http\Controllers\Api\V1;
 
-use App\Http\Requests\Users\AddRole;
-use App\Http\Requests\Users\Create;
-use App\Http\Requests\Users\Delete;
-use App\Http\Requests\Users\Find;
-use App\Http\Requests\Users\Get;
-use App\Http\Requests\Users\RemoveRole;
-use App\Http\Requests\Users\Update;
 use App\Services\UserService;
 use App\Transformers\UserTransformer;
+use App\Validators\User\CreateValidator;
+use App\Validators\User\UpdateValidator;
 use Fractal;
 
 class UserController extends ApiController
@@ -44,6 +39,14 @@ class UserController extends ApiController
      *         default="John Doe"
      *     ),
      *     @SWG\Parameter(
+     *         description="Username",
+     *         name="username",
+     *         required=true,
+     *         in="formData",
+     *         type="string",
+     *         default="SomeUsername"
+     *     ),
+     *     @SWG\Parameter(
      *         description="Password",
      *         name="password",
      *         required=true,
@@ -69,9 +72,9 @@ class UserController extends ApiController
      *     )
      * )
      */
-    public function create(Create $request)
+    public function create(CreateValidator $validator)
     {
-        $user = $this->userService->create($request->request);
+        $user = $this->userService->create($validator);
 
         return Fractal::item($user)
             ->transformWith(new UserTransformer)
@@ -81,7 +84,7 @@ class UserController extends ApiController
     /**
      * @SWG\Get(
      *     path="/users/{id}",
-     *     description="Get specific user when you have permission!",
+     *     description="Get specific user",
      *     tags={"User"},
      *     @SWG\Parameter(
      *         description="ID (Uuid)",
@@ -101,7 +104,7 @@ class UserController extends ApiController
      *     )
      * )
      */
-    public function get($id, Get $request)
+    public function get(string $id)
     {
         $user = $this->userService->get($id);
 
@@ -125,7 +128,7 @@ class UserController extends ApiController
      *     )
      * )
      */
-    public function find(Find $request)
+    public function find()
     {
         $users = $this->userService->find();
 
@@ -141,7 +144,7 @@ class UserController extends ApiController
     /**
      * @SWG\Patch(
      *     path="/users/{id}",
-     *     description="Update specific user when you have permission!",
+     *     description="Update specific user",
      *     tags={"User"},
      *     @SWG\Parameter(
      *         description="ID (Uuid)",
@@ -158,6 +161,13 @@ class UserController extends ApiController
      *         in="formData",
      *         type="string",
      *         default=""
+     *     ),
+     *     @SWG\Parameter(
+     *         description="Username",
+     *         name="username",
+     *         required=false,
+     *         in="formData",
+     *         type="string",
      *     ),
      *     @SWG\Parameter(
      *         description="Status",
@@ -178,9 +188,9 @@ class UserController extends ApiController
      *     )
      * )
      */
-    public function update($id, Update $request)
+    public function update(string $id, UpdateValidator $validator)
     {
-        $user = $this->userService->update($id, $request->request);
+        $user = $this->userService->update($id, $validator);
 
         return Fractal::item($user)
             ->transformWith(new UserTransformer)
@@ -210,7 +220,7 @@ class UserController extends ApiController
      *     )
      * )
      */
-    public function delete($id, Delete $request)
+    public function delete(string $id)
     {
         $user = $this->userService->delete($id);
 
