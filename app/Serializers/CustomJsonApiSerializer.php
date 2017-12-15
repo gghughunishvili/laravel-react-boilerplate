@@ -65,11 +65,11 @@ class CustomJsonApiSerializer extends ArraySerializer
 
         $resource = ['type' => $resourceKey] + $data;
 
-        if(isset($resource['links'])) {
+        if (isset($resource['links'])) {
             $custom_links = $data['links'];
         }
 
-        if (isset($resource['meta'])){
+        if (isset($resource['meta'])) {
             $resource['meta'] = $data['meta'];
         }
 
@@ -77,7 +77,7 @@ class CustomJsonApiSerializer extends ArraySerializer
             $resource['links'] = [
                 'self' => "{$this->baseUrl}/$resourceKey/$id",
             ];
-            if(isset($custom_links)) {
+            if (isset($custom_links)) {
                 $resource['links'] = array_merge($custom_links, $resource['links']);
             }
         }
@@ -94,13 +94,13 @@ class CustomJsonApiSerializer extends ArraySerializer
      */
     public function paginator(PaginatorInterface $paginator)
     {
-        $currentPage = (int)$paginator->getCurrentPage();
-        $lastPage = (int)$paginator->getLastPage();
+        $currentPage = (int) $paginator->getCurrentPage();
+        $lastPage = (int) $paginator->getLastPage();
 
         $pagination = [
-            'total' => (int)$paginator->getTotal(),
-            'count' => (int)$paginator->getCount(),
-            'per_page' => (int)$paginator->getPerPage(),
+            'total' => (int) $paginator->getTotal(),
+            'count' => (int) $paginator->getCount(),
+            'per_page' => (int) $paginator->getPerPage(),
             'current_page' => $currentPage,
             'total_pages' => $lastPage,
         ];

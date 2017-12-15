@@ -52,7 +52,7 @@ class UserService extends AppService
     {
         $users = User::all();
         if (!auth()->user()->may('get-passive-user')) {
-            $users = $users->where('status', '<>' ,'passive')->get();
+            $users = $users->where('status', '<>', 'passive')->get();
         }
         return $users;
     }

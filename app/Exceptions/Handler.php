@@ -65,7 +65,7 @@ class Handler extends ExceptionHandler
 
         if ($exception instanceof ForbiddenException) {
                 return $this->respondForbidden($exception->getMessage());
-            }
+        }
 
         if ($exception instanceof GeneralException) {
             return $this->respondError($exception->getMessage());
@@ -74,7 +74,8 @@ class Handler extends ExceptionHandler
         return parent::render($request, $exception);
     }
 
-    private function _customValidationMessage($errors){
+    private function _customValidationMessage($errors)
+    {
         $data = [];
 
         foreach ($errors as $key => $val) {
