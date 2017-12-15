@@ -32,6 +32,6 @@ script:
   - vendor/bin/phpunit --colors --debug  --coverage-text
   - phpcs
 
-  notifications:
-    on_success: never
-    on_failure: never
+notifications:
+  on_success: never
+  on_failure: never
