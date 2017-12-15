@@ -1,20 +1,20 @@
-os:
-  - linux
+#os:
+#  - linux
 
 language: php
 
 php:
-  - 5.6
-  - 7.0
+  #- 5.6
+  #- 7.0
   - 7.1
-  - 7.2
+  #- 7.2
 
 before_script:
   - echo $TEST_ENV
   - cp .env.travis .env
   - mysql -e 'create database testing;'
   - composer self-update
-  - pear install pear/PHP_CodeSniffer
+#  - pear install pear/PHP_CodeSniffer
   - composer install --prefer-dist --quiet --no-interaction
 
 services:
@@ -30,7 +30,7 @@ script:
   - composer dump-autoload
   - chmod -R o+w storage
   - vendor/bin/phpunit --colors --debug  --coverage-text
-  - phpcs
+#  - phpcs
 
 notifications:
   on_success: never
