@@ -11,6 +11,7 @@ php:
 
 before_script:
   - cp .env.travis .env
+  - printf $UNIT_TEST_ENVS >> .env
   - mysql -e 'create database testing;'
   - composer self-update
 #  - pear install pear/PHP_CodeSniffer
