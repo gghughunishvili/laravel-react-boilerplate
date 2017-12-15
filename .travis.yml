@@ -30,7 +30,7 @@ script:
   - composer dump-autoload
   - chmod -R o+w storage
   - vendor/bin/phpunit --colors --debug  --coverage-text
-#  - phpcs
+  - vendor/bin/phpcs --standard=build/phpcs.xml -spn --encoding=utf-8 app/ --report-width=150
 
 notifications:
   on_success: never
