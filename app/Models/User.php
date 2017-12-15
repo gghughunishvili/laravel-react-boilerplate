@@ -5,12 +5,14 @@ namespace App\Models;
 use App\Traits\UuidTrait;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Silber\Bouncer\Database\HasRolesAndAbilities;
 use Laravel\Passport\HasApiTokens;
 use Hash;
 
 class User extends Authenticatable
 {
     use HasApiTokens, Notifiable, UuidTrait;
+    use HasRolesAndAbilities;
 
     /**
      * Indicates if the IDs are auto-incrementing.
