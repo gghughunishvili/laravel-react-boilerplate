@@ -19,17 +19,6 @@ before_script:
 services:
   - mysql
 
-addons:
-  apt:
-    sources:
-      - mysql-5.7-trusty
-    packages:
-      - mysql-server
-
-dist: trusty
-
-sudo: required
-
 script:
   - php artisan key:generate
   - php artisan migrate --force
