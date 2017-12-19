@@ -1,8 +1,6 @@
 <?php
 
-use Ability;
 use App\Models\User;
-use Role;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,14 +18,14 @@ use Role;
 $abilities = [];
 
 // Ability
-$abilityClass = Ability::class;
+$abilityClass = 'Ability';
 $abilities[$abilityClass]['create'] = 1;
 $abilities[$abilityClass]['update'] = 2;
 $abilities[$abilityClass]['find'] = 3;
 $abilities[$abilityClass]['give'] = 4;
 
 // Role
-$roleClass = Role::class;
+$roleClass = 'Role';
 $abilities[$roleClass]['create'] = 5;
 $abilities[$roleClass]['update'] = 6;
 $abilities[$roleClass]['delete'] = 7;
@@ -42,3 +40,5 @@ $abilities[$userClass]['delete'] = 12;
 $abilities[$userClass]['find'] = 13;
 $abilities[$userClass]['manage-own'] = 14;
 $abilities[$userClass]['manage-any'] = 15;
+
+return $abilities;

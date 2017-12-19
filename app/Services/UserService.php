@@ -6,6 +6,8 @@ use App\Exceptions\GeneralException;
 use App\Models\User;
 use App\Services\Traits\UserServiceTrait;
 use App\Validators\User\CreateValidator;
+use App\Validators\User\UpdateValidator;
+use Bouncer;
 use Symfony\Component\HttpFoundation\ParameterBag;
 
 class UserService extends AppService
@@ -51,9 +53,9 @@ class UserService extends AppService
     public function find()
     {
         $users = User::all();
-        if (!auth()->user()->may('get-passive-user')) {
+        /*if (!auth()->user()->can('get-passive-user')) {
             $users = $users->where('status', '<>', 'passive')->get();
-        }
+        }*/
         return $users;
     }
 
@@ -64,9 +66,13 @@ class UserService extends AppService
      * @param  ParameterBag $params,
      * @return User
      */
-    public function update(string $id, ParameterBag $params)
+    public function update(string $id, UpdateValidator $validator)
     {
+        $params = $validator->getParamsBag();
         $user = $this->checkPermissionAndGetExistingUser($id);
+        auth()->user()->allow('modify-any-user', User::class);
+        //dd("here");
+        Bouncer::allows('update-user', User::class);
 
         if ($params->has('name')) {
             $user->name = $params->get('name');
