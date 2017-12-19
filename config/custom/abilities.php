@@ -41,3 +41,4 @@ $abilities[$userClass]['update'] = 11;
 $abilities[$userClass]['delete'] = 12;
 $abilities[$userClass]['find'] = 13;
 $abilities[$userClass]['manage-own'] = 14;
+$abilities[$userClass]['manage-any'] = 15;
