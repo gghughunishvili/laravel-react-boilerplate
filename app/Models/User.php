@@ -25,30 +25,6 @@ class User extends Authenticatable
     public $incrementing = false;
 
     /**
-     * @SWG\Property(example="John Doe")
-     * @var string
-     */
-    public $name;
-
-    /**
-     * @SWG\Property(example="johndoo",minimum=4,maximum=55)
-     * @var string
-     */
-    public $username;
-
-    /**
-     * @SWG\Property(example="someone@example.com")
-     * @var string
-     */
-    public $email;
-
-    /**
-     * @SWG\Property(minimum=6)
-     * @var string
-     */
-    public $password;
-
-    /**
      * The attributes that are mass assignable.
      *
      * @var array
