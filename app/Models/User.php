@@ -25,12 +25,6 @@ class User extends Authenticatable
     public $incrementing = false;
 
     /**
-     * @SWG\Property(format="char:36")
-     * @var string
-     */
-    public $id;
-
-    /**
      * @SWG\Property(example="John Doe")
      * @var string
      */
