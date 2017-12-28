@@ -22,15 +22,6 @@ use Illuminate\Routing\Controller as BaseController;
  *             email="g.ghughunishvili@gmail.com"
  *         ),
  *     ),
- *     @SWG\Definition(
- *         definition="Error",
- *         required={"error"},
- *         @SWG\Property(
- *             property="error",
- *             type="string",
- *             default="message",
- *         ),
- *     ),
  *     security={
  *          {"api_key": {}}
  *     }
@@ -46,10 +37,6 @@ use Illuminate\Routing\Controller as BaseController;
  * @SWG\Tag(
  *   name="Role",
  *   description="Management of roles, with their all endpoints"
- * ),
- * @SWG\Tag(
- *   name="Permission",
- *   description="Management of permissions, with their all endpoints"
  * ),
  */
 abstract class ApiController extends BaseController
