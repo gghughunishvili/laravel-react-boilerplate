@@ -18,12 +18,14 @@ $permissions['role']['create'] = 1;
 $permissions['role']['get'] = 2;
 $permissions['role']['find'] = 3;
 $permissions['role']['delete'] = 4;
-$permissions['role']['attach-permission'] = 5;
+$permissions['role']['attach-permission-to'] = 5;
 
 $permissions['user']['create'] = 6;
 $permissions['user']['update'] = 7;
 $permissions['user']['get'] = 8;
 $permissions['user']['find'] = 9;
 $permissions['user']['delete'] = 10;
+$permissions['user']['attach-permisssion-to'] = 11;
+$permissions['user']['attach-role-to'] = 12;
 
 return $permissions;
