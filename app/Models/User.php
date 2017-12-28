@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Exceptions\ForbiddenException;
 use App\Traits\UuidTrait;
 use Hash;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -9,9 +10,6 @@ use Illuminate\Notifications\Notifiable;
 use Laravel\Passport\HasApiTokens;
 use Spatie\Permission\Traits\HasRoles;
 
-/**
- * @SWG\Definition(definition="User", required={"name", "username", "email", "password"})
- */
 class User extends Authenticatable
 {
     use HasApiTokens, Notifiable, UuidTrait;
@@ -60,5 +58,12 @@ class User extends Authenticatable
                 $query->orWhere('email', $identifier)
                     ->orWhere('username', $identifier);
             })->first();
+    }
+
+    public function should($permission)
+    {
+        if (!$this->hasPermissionTo($permission)) {
+            throw new ForbiddenException("User doesn't have permission to: " . $permission);
+        }
     }
 }
