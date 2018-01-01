@@ -2,20 +2,12 @@
 
 namespace App\Http\Controllers\Api\V1;
 
-use App\Services\RoleService;
 use App\Transformers\RoleTransformer;
 use App\Validators\Role\StoreValidator;
 use Fractal;
 
 class RoleController extends ApiController
 {
-    protected $roleService;
-
-    public function __construct(RoleService $roleService)
-    {
-        $this->roleService = $roleService;
-    }
-
     /**
      * @SWG\Post(
      *     path="/roles",
@@ -41,7 +33,7 @@ class RoleController extends ApiController
      */
     public function create(StoreValidator $validator)
     {
-        $role = $this->roleService->create($validator);
+        $role = $this->getRoleService()->create($validator);
 
         return Fractal::item($role)
             ->transformWith(new RoleTransformer)
@@ -77,7 +69,7 @@ class RoleController extends ApiController
      */
     public function get(int $id)
     {
-        $role = $this->roleService->get($id);
+        $role = $this->getRoleService()->get($id);
 
         return Fractal::item($role)
             ->transformWith(new RoleTransformer)
@@ -101,53 +93,9 @@ class RoleController extends ApiController
      */
     public function find()
     {
-        $roles = $this->roleService->find();
+        $roles = $this->getRoleService()->find();
 
         return Fractal::collection($roles)
-            ->transformWith(new RoleTransformer)
-            ->withResourceName('role');
-    }
-
-    /**
-     * @SWG\Put(
-     *     path="/roles/{id}",
-     *     description="Update specific role",
-     *     tags={"Role"},
-     *     @SWG\Parameter(
-     *         description="ID",
-     *         name="id",
-     *         required=true,
-     *         in="path",
-     *         type="integer",
-     *         default="2"
-     *     ),
-     *     @SWG\Parameter(
-     *         description="Role name",
-     *         name="name",
-     *         required=true,
-     *         in="formData",
-     *         type="string",
-     *         default=""
-     *     ),
-     *     @SWG\Response(
-     *         response=200,
-     *         description="Role has been updated successfully!",
-     *     ),
-     *     @SWG\Response(
-     *         response=403,
-     *         description="No permission to update role!",
-     *     ),
-     *     @SWG\Response(
-     *         response=404,
-     *         description="Role not found!",
-     *     )
-     * )
-     */
-    public function update(int $id, StoreValidator $validator)
-    {
-        $role = $this->roleService->update($id, $validator);
-
-        return Fractal::item($role)
             ->transformWith(new RoleTransformer)
             ->withResourceName('role');
     }
@@ -181,7 +129,7 @@ class RoleController extends ApiController
      */
     public function delete(int $id)
     {
-        $role = $this->roleService->delete($id);
+        $role = $this->getRoleService()->delete($id);
 
         return $this->respondNoContent();
     }

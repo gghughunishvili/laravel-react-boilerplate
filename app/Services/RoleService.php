@@ -2,11 +2,14 @@
 
 namespace App\Services;
 
+use App\Models\Role;
+use App\Services\Traits\RoleServiceTrait;
 use App\Validators\Role\StoreValidator;
 use Symfony\Component\HttpFoundation\ParameterBag;
 
 class RoleService extends AppService
 {
+    use RoleServiceTrait;
     /**
      * Create a new role
      *
@@ -52,28 +55,6 @@ class RoleService extends AppService
         $this->authUser->should('find-role');
         $roles = Role::all();
         return $roles;
-    }
-
-    /**
-     * Uodate a role instance.
-     *
-     * @param  string $id,
-     * @param  ParameterBag $params,
-     * @return Role
-     */
-    public function update(string $id, StoreValidator $validator) : Role
-    {
-        $params = $validator->getParamsBag();
-
-        $this->authUser->should('update-role');
-
-        $role = $this->getExistingRole($id);
-
-        $role->name = $params->get('name');
-
-        $role->save();
-
-        return $role;
     }
 
     /**

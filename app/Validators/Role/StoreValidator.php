@@ -2,6 +2,7 @@
 
 namespace App\Validators\Role;
 
+use App\Models\Role;
 use App\Validators\Validator;
 
 class StoreValidator extends Validator
@@ -14,7 +15,7 @@ class StoreValidator extends Validator
     public function rules()
     {
         return [
-            'name' => 'required|min:3|max:255|unique:' . App\Models\Role::getTable(),
+            'name' => 'required|min:3|max:255|unique:' . (new Role)->getTable(),
         ];
     }
 }
