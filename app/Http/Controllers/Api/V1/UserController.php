@@ -242,4 +242,128 @@ class UserController extends ApiController
             ->transformWith(new UserTransformer)
             ->withResourceName('User');
     }
+
+    /**
+     * @SWG\Get(
+     *     path="/users/{id}/roles",
+     *     description="Get all roles for the user",
+     *     tags={"User"},
+     *     @SWG\Parameter(
+     *         description="User ID",
+     *         name="id",
+     *         required=true,
+     *         in="path",
+     *         type="string",
+     *     ),
+     *     @SWG\Response(
+     *         response=200,
+     *         description="User data with roles has been returned successfully!",
+     *     ),
+     *     @SWG\Response(
+     *         response=403,
+     *         description="No permission to get user roles!",
+     *     ),
+     *     @SWG\Response(
+     *         response=404,
+     *         description="User not found!",
+     *     )
+     * )
+     */
+    public function findRoles(string $id)
+    {
+        $user = $this->getUserService()->findRoles($id);
+
+        return Fractal::item($user)
+            ->transformWith(new UserTransformer)
+            ->withResourceName('User')
+            ->parseIncludes('roles');
+    }
+
+    /**
+     * @SWG\Post(
+     *     path="/users/{userId}/roles/{roleId}",
+     *     description="Attach role to the user",
+     *     tags={"User"},
+     *     @SWG\Parameter(
+     *         description="User ID",
+     *         name="userId",
+     *         required=true,
+     *         in="path",
+     *         type="string",
+     *     ),
+     *     @SWG\Parameter(
+     *         description="Role ID",
+     *         name="roleId",
+     *         required=true,
+     *         in="path",
+     *         type="integer",
+     *         default="1"
+     *     ),
+     *     @SWG\Response(
+     *         response=200,
+     *         description="Role has been added to the user successfully!",
+     *     ),
+     *     @SWG\Response(
+     *         response=403,
+     *         description="No permission to attach role to user!",
+     *     ),
+     *     @SWG\Response(
+     *         response=404,
+     *         description="Role or User not found!",
+     *     ),
+     * )
+     */
+    public function attachRole(string $userId, int $roleId)
+    {
+        $user = $this->getUserService()->attachRole($userId, $roleId);
+
+        return Fractal::item($user)
+            ->transformWith(new UserTransformer)
+            ->withResourceName('User')
+            ->parseIncludes('roles');
+    }
+
+    /**
+     * @SWG\Delete(
+     *     path="/users/{userId}/roles/{roleId}",
+     *     description="Attach role to the user",
+     *     tags={"User"},
+     *     @SWG\Parameter(
+     *         description="User ID",
+     *         name="userId",
+     *         required=true,
+     *         in="path",
+     *         type="string",
+     *     ),
+     *     @SWG\Parameter(
+     *         description="Role ID",
+     *         name="roleId",
+     *         required=true,
+     *         in="path",
+     *         type="integer",
+     *         default="1"
+     *     ),
+     *     @SWG\Response(
+     *         response=200,
+     *         description="Role has been added to the user successfully!",
+     *     ),
+     *     @SWG\Response(
+     *         response=403,
+     *         description="No permission to detach role from user!",
+     *     ),
+     *     @SWG\Response(
+     *         response=404,
+     *         description="Role or User not found!",
+     *     ),
+     * )
+     */
+    public function detachRole(string $userId, int $roleId)
+    {
+        $user = $this->getUserService()->detachRole($userId, $roleId);
+
+        return Fractal::item($user)
+            ->transformWith(new UserTransformer)
+            ->withResourceName('User')
+            ->parseIncludes('roles');
+    }
 }

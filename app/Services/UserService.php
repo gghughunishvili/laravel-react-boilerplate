@@ -4,6 +4,8 @@ namespace App\Services;
 
 use App\Exceptions\ForbiddenException;
 use App\Exceptions\GeneralException;
+use App\Exceptions\InvalidArgumentException;
+use App\Models\Role;
 use App\Models\User;
 use App\Services\Traits\UserServiceTrait;
 use App\Validators\User\CreateValidator;
@@ -112,5 +114,48 @@ class UserService extends AppService
     public function authorizedUser()
     {
         return auth()->user();
+    }
+
+    public function findRoles(string $id) : User
+    {
+        $this->authUser->should('find-roles-for-user');
+
+        $user = User::getExistingModel($id);
+
+        return $user;
+    }
+
+    public function attachRole(string $userId, int $roleId) : User
+    {
+        $this->authUser->should('attach-role-to-user');
+
+        $user = User::getExistingModel($userId);
+
+        $role = Role::getExistingModel($roleId);
+
+        if ($user->hasRole($role)) {
+            throw new InvalidArgumentException("The role is already assigned to the user");
+        }
+
+        $user->assignRole($role);
+
+        return $user->fresh();
+    }
+
+    public function detachRole(string $userId, int $roleId) : User
+    {
+        $this->authUser->should('detach-role-from-user');
+
+        $user = User::getExistingModel($userId);
+
+        $role = Role::getExistingModel($roleId);
+
+        if (!$user->hasRole($role)) {
+            throw new InvalidArgumentException("The role is not assigned to the user");
+        }
+
+        $user->removeRole($role);
+
+        return $user->fresh();
     }
 }

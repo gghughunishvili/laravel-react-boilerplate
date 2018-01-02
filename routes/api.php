@@ -29,6 +29,9 @@ Route::group(['prefix' => 'v1', 'namespace' => 'Api\V1'], function ()
         Route::get('users', 'UserController@find');
         Route::delete('users/{id}', 'UserController@delete');
         Route::patch('users/{id}', 'UserController@update');
+        Route::get('users/{id}/roles', 'UserController@findRoles');
+        Route::post('users/{userId}/roles/{roleId}', 'UserController@attachRole');
+        Route::delete('users/{userId}/roles/{roleId}', 'UserController@detachRole');
 
         // Roles
         Route::post('roles', 'RoleController@create');

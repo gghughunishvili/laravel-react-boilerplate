@@ -3,11 +3,12 @@
 namespace App\Transformers;
 
 use App\Models\User;
+use App\Transformers\RoleTransformer;
 use League\Fractal\TransformerAbstract;
 
 class UserTransformer extends TransformerAbstract
 {
-    protected $availableIncludes = [];
+    protected $availableIncludes = ['roles'];
     protected $defaultIncludes = [];
 
     /**
@@ -25,5 +26,10 @@ class UserTransformer extends TransformerAbstract
         ];
 
         return $data;
+    }
+
+    public function includeRoles(User $user)
+    {
+        return $this->collection($user->roles, new RoleTransformer(), 'Role');
     }
 }
