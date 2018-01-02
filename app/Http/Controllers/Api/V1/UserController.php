@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\Api\V1;
 
-use App\Services\UserService;
 use App\Transformers\UserTransformer;
 use App\Validators\User\CreateValidator;
 use App\Validators\User\UpdateValidator;
@@ -10,13 +9,6 @@ use Fractal;
 
 class UserController extends ApiController
 {
-    protected $userService;
-
-    public function __construct(UserService $userService)
-    {
-        $this->userService = $userService;
-    }
-
     /**
      * @SWG\Post(
      *     path="/users",
@@ -74,11 +66,11 @@ class UserController extends ApiController
      */
     public function create(CreateValidator $validator)
     {
-        $user = $this->userService->create($validator);
+        $user = $this->getUserService()->create($validator);
 
         return Fractal::item($user)
             ->transformWith(new UserTransformer)
-            ->withResourceName('user');
+            ->withResourceName('User');
     }
 
     /**
@@ -106,11 +98,11 @@ class UserController extends ApiController
      */
     public function get(string $id)
     {
-        $user = $this->userService->get($id);
+        $user = $this->getUserService()->get($id);
 
         return Fractal::item($user)
             ->transformWith(new UserTransformer)
-            ->withResourceName('user');
+            ->withResourceName('User');
     }
 
     /**
@@ -130,7 +122,7 @@ class UserController extends ApiController
      */
     public function find()
     {
-        $users = $this->userService->find();
+        $users = $this->getUserService()->find();
 
         if (!$users) {
             return $this->respondError("Users with given filter not found.");
@@ -138,7 +130,7 @@ class UserController extends ApiController
 
         return Fractal::collection($users)
             ->transformWith(new UserTransformer)
-            ->withResourceName('user');
+            ->withResourceName('User');
     }
 
     /**
@@ -190,11 +182,11 @@ class UserController extends ApiController
      */
     public function update(string $id, UpdateValidator $validator)
     {
-        $user = $this->userService->update($id, $validator);
+        $user = $this->getUserService()->update($id, $validator);
 
         return Fractal::item($user)
             ->transformWith(new UserTransformer)
-            ->withResourceName('user');
+            ->withResourceName('User');
     }
 
     /**
@@ -222,7 +214,7 @@ class UserController extends ApiController
      */
     public function delete(string $id)
     {
-        $user = $this->userService->delete($id);
+        $user = $this->getUserService()->delete($id);
 
         return $this->respondNoContent();
     }
@@ -244,10 +236,10 @@ class UserController extends ApiController
      */
     public function me()
     {
-        $user = $this->userService->authorizedUser();
+        $user = $this->getUserService()->authorizedUser();
 
         return Fractal::item($user)
             ->transformWith(new UserTransformer)
-            ->withResourceName('user');
+            ->withResourceName('User');
     }
 }

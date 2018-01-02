@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Exceptions\ForbiddenException;
+use App\Traits\ModelTrait;
 use App\Traits\UuidTrait;
 use Hash;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -14,6 +15,7 @@ class User extends Authenticatable
 {
     use HasApiTokens, Notifiable, UuidTrait;
     use HasRoles;
+    use ModelTrait;
 
     /**
      * Indicates if the IDs are auto-incrementing.

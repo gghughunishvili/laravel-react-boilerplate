@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Exceptions\ForbiddenException;
 use App\Exceptions\GeneralException;
 use App\Models\User;
 use App\Services\Traits\UserServiceTrait;
@@ -12,7 +13,6 @@ use Symfony\Component\HttpFoundation\ParameterBag;
 
 class UserService extends AppService
 {
-    use UserServiceTrait;
     /**
      * Create a new user instance after a valid registration.
      *
@@ -39,7 +39,11 @@ class UserService extends AppService
      */
     public function get(string $id)
     {
-        $user = $this->checkPermissionAndGetExistingUser($id);
+        $user = User::GetExistingModel($id);
+
+        if ($this->authUser->cant('get', $user)) {
+            throw new ForbiddenException("No permission to get this user");
+        }
 
         return $user;
     }
@@ -52,10 +56,9 @@ class UserService extends AppService
      */
     public function find()
     {
+        $this->authUser->should('find-user');
+
         $users = User::all();
-        /*if (!auth()->user()->can('get-passive-user')) {
-            $users = $users->where('status', '<>', 'passive')->get();
-        }*/
         return $users;
     }
 
@@ -69,22 +72,24 @@ class UserService extends AppService
     public function update(string $id, UpdateValidator $validator)
     {
         $params = $validator->getParamsBag();
-        $user = $this->checkPermissionAndGetExistingUser($id);
-        auth()->user()->allow('modify-any-user', User::class);
-        //dd("here");
-        Bouncer::allows('update-user', User::class);
+        $user = User::GetExistingModel($id);
+
+        if ($this->authUser->cant('update', $user)) {
+            throw new ForbiddenException("No permission to get this user");
+        }
 
         if ($params->has('name')) {
             $user->name = $params->get('name');
         }
 
         if ($params->has('status')) {
+            $this->authUser->should('update-status-of-user');
             $user->status = $params->get('status');
         }
 
         $user->save();
 
-        return $user;
+        return $user->fresh();
     }
 
     /**
@@ -94,7 +99,8 @@ class UserService extends AppService
      */
     public function delete(string $id)
     {
-        $user = $this->checkPermissionAndGetExistingUser($id);
+        $this->authUser->should('delete-user');
+        $user = User::GetExistingModel($id);
 
         $user->delete();
     }
