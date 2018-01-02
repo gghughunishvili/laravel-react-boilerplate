@@ -51,15 +51,18 @@ abstract class ApiController extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests, MyResponseTrait;
 
-    public function getRoleService() {
+    public function getRoleService()
+    {
         return App::make(RoleService::class);
     }
 
-    public function getPermissionService() {
+    public function getPermissionService()
+    {
         return App::make(PermissionService::class);
     }
 
-    public function getUserService() {
+    public function getUserService()
+    {
         return App::make(UserService::class);
     }
 }

@@ -94,13 +94,13 @@ class CustomJsonApiSerializer extends ArraySerializer
      */
     public function paginator(PaginatorInterface $paginator)
     {
-        $currentPage = (int)$paginator->getCurrentPage();
-        $lastPage = (int)$paginator->getLastPage();
+        $currentPage = (int) $paginator->getCurrentPage();
+        $lastPage = (int) $paginator->getLastPage();
 
         $pagination = [
-            'total' => (int)$paginator->getTotal(),
-            'count' => (int)$paginator->getCount(),
-            'per_page' => (int)$paginator->getPerPage(),
+            'total' => (int) $paginator->getTotal(),
+            'count' => (int) $paginator->getCount(),
+            'per_page' => (int) $paginator->getPerPage(),
             'current_page' => $currentPage,
             'total_pages' => $lastPage,
         ];
