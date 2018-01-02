@@ -42,6 +42,10 @@ use Illuminate\Routing\Controller as BaseController;
  *   name="Role",
  *   description="Management of roles, with their all endpoints"
  * ),
+ * @SWG\Tag(
+ *   name="Permission",
+ *   description="Management of permissions' endpoints"
+ * ),
  */
 abstract class ApiController extends BaseController
 {
