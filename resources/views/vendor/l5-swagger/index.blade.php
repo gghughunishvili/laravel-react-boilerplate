@@ -90,6 +90,8 @@ window.onload = function() {
       SwaggerUIBundle.plugins.DownloadUrl
     ],
 
+    docExpansion : 'none',
+
     layout: "StandaloneLayout"
   })
 
