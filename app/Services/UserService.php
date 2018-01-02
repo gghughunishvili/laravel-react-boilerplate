@@ -10,7 +10,6 @@ use App\Models\User;
 use App\Services\Traits\UserServiceTrait;
 use App\Validators\User\CreateValidator;
 use App\Validators\User\UpdateValidator;
-use Bouncer;
 use Symfony\Component\HttpFoundation\ParameterBag;
 
 class UserService extends AppService
