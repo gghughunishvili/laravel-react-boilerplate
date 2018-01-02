@@ -110,7 +110,7 @@ class UserService extends AppService
      * Get authorized user
      * @return User
      */
-    public function authorizedUser()
+    public function authorizedUser() : User
     {
         return auth()->user();
     }
