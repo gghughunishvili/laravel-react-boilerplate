@@ -15,6 +15,8 @@ abstract class AppService
 
     protected $dispatcher;
 
+    public $authUser = null;
+
     public function __construct(
         AuthManager $auth,
         DatabaseManager $database,
@@ -23,5 +25,6 @@ abstract class AppService
         $this->auth = $auth;
         $this->database = $database;
         $this->dispatcher = $dispatcher;
+        $this->authUser = auth()->user();
     }
 }

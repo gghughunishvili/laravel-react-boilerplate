@@ -22,8 +22,27 @@ Route::group(['prefix' => 'v1', 'namespace' => 'Api\V1'], function ()
     Route::group(['middleware' => ['api', 'auth:api']], function ($api)
     {
         Route::patch('oauth/token', 'AccessTokenController@revokeToken')->name("api::oauth::logout");
+
+        // Users
         Route::get('users/me', 'UserController@me');
         Route::get('users/{id}', 'UserController@get');
+        Route::get('users', 'UserController@find');
+        Route::delete('users/{id}', 'UserController@delete');
         Route::patch('users/{id}', 'UserController@update');
+        Route::get('users/{id}/roles', 'UserController@findRoles');
+        Route::post('users/{userId}/roles/{roleId}', 'UserController@attachRole');
+        Route::delete('users/{userId}/roles/{roleId}', 'UserController@detachRole');
+
+        // Roles
+        Route::post('roles', 'RoleController@create');
+        Route::get('roles', 'RoleController@find');
+        Route::get('roles/{id}', 'RoleController@get');
+        Route::delete('roles/{id}', 'RoleController@delete');
+        Route::get('roles/{id}/permissions', 'RoleController@getPermissions');
+        Route::post('roles/{roleId}/permissions/{permissionId}', 'RoleController@attachPermission');
+        Route::delete('roles/{roleId}/permissions/{permissionId}', 'RoleController@detachPermission');
+
+        // Permissions
+        Route::get('permissions', 'PermissionController@find');
     });
 });
