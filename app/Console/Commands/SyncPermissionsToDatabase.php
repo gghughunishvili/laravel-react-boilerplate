@@ -63,8 +63,8 @@ class SyncPermissionsToDatabase extends Command
                     $existedPermission->delete();
                 }
 
-                // Also should be deleted if exists by this id
-                $existedIdPermission = Permission::find($id);
+                // Also should be deleted if exists by this name
+                $existedIdPermission = Permission::where('name', $name)->first();
                 if ($existedIdPermission) {
                     $existedIdPermission->delete();
                 }
