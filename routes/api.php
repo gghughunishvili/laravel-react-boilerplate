@@ -35,6 +35,9 @@ Route::group(['prefix' => 'v1', 'namespace' => 'Api\V1'], function ()
         Route::get('roles', 'RoleController@find');
         Route::get('roles/{id}', 'RoleController@get');
         Route::delete('roles/{id}', 'RoleController@delete');
+        Route::get('roles/{id}/permissions', 'RoleController@getPermissions');
+        Route::post('roles/{roleId}/permissions/{permissionId}', 'RoleController@attachPermission');
+        Route::delete('roles/{roleId}/permissions/{permissionId}', 'RoleController@detachPermission');
 
         // Permissions
         Route::get('permissions', 'PermissionController@find');

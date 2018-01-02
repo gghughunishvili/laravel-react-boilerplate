@@ -2,14 +2,14 @@
 
 namespace App\Services;
 
+use App\Exceptions\InvalidArgumentException;
+use App\Models\Permission;
 use App\Models\Role;
-use App\Services\Traits\RoleServiceTrait;
 use App\Validators\Role\StoreValidator;
 use Symfony\Component\HttpFoundation\ParameterBag;
 
 class RoleService extends AppService
 {
-    use RoleServiceTrait;
     /**
      * Create a new role
      *
@@ -33,13 +33,13 @@ class RoleService extends AppService
     /**
      * Get a role instance.
      *
-     * @param  string $id
+     * @param  int $id
      * @return Role
      */
-    public function get(string $id) : Role
+    public function get(int $id) : Role
     {
         $this->authUser->should('get-role');
-        $role = $this->getExistingRole($id);
+        $role = Role::getExistingModel($id);
 
         return $role;
     }
@@ -47,7 +47,7 @@ class RoleService extends AppService
     /**
      * Get all matched roles.
      *
-     * @param  string $id
+     * @param  int $id
      * @return Role
      */
     public function find()
@@ -60,14 +60,49 @@ class RoleService extends AppService
     /**
      * Delete specific role.
      *
-     * @param  string $id
+     * @param  int $id
      */
-    public function delete(string $id)
+    public function delete(int $id)
     {
         $this->authUser->should('delete-role');
 
-        $role = $this->getExistingRole($id);
+        $role = Role::getExistingModel($id);
 
         $role->delete();
+    }
+
+    public function getPermissions(int $id)
+    {
+        $this->authUser->should('find-permissions-for-role');
+
+        $role = Role::getExistingModel($id);
+
+        return $role;
+    }
+
+    public function attachPermission(int $roleId, int $permissionId)
+    {
+        $this->authUser->should('attach-permission-to-role');
+
+        $role = Role::getExistingModel($roleId);
+
+        $permission = Permission::getExistingModel($permissionId);
+
+        $role->givePermission($permission);
+
+        return $role->fresh();
+    }
+
+    public function detachPermission(int $roleId, int $permissionId)
+    {
+        $this->authUser->should('detach-permission-from-role');
+
+        $role = Role::getExistingModel($roleId);
+
+        $permission = Permission::getExistingModel($permissionId);
+
+        $role->revokePermission($permission);
+
+        return $role->fresh();
     }
 }

@@ -3,11 +3,12 @@
 namespace App\Transformers;
 
 use App\Models\Role;
+use App\Transformers\PermissionTransformer;
 use League\Fractal\TransformerAbstract;
 
 class RoleTransformer extends TransformerAbstract
 {
-    protected $availableIncludes = [];
+    protected $availableIncludes = ['permissions'];
     protected $defaultIncludes = [];
 
     /**
@@ -24,5 +25,10 @@ class RoleTransformer extends TransformerAbstract
         ];
 
         return $data;
+    }
+
+    public function includePermissions(Role $role)
+    {
+        return $this->collection($role->permissions, new PermissionTransformer(), 'Permission');
     }
 }

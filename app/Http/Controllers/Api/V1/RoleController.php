@@ -37,7 +37,7 @@ class RoleController extends ApiController
 
         return Fractal::item($role)
             ->transformWith(new RoleTransformer)
-            ->withResourceName('role');
+            ->withResourceName('Role');
     }
 
     /**
@@ -73,7 +73,7 @@ class RoleController extends ApiController
 
         return Fractal::item($role)
             ->transformWith(new RoleTransformer)
-            ->withResourceName('role');
+            ->withResourceName('Role');
     }
 
     /**
@@ -97,7 +97,7 @@ class RoleController extends ApiController
 
         return Fractal::collection($roles)
             ->transformWith(new RoleTransformer)
-            ->withResourceName('role');
+            ->withResourceName('Role');
     }
 
     /**
@@ -132,5 +132,132 @@ class RoleController extends ApiController
         $role = $this->getRoleService()->delete($id);
 
         return $this->respondNoContent();
+    }
+
+    /**
+     * @SWG\Get(
+     *     path="/roles/{id}/permissions",
+     *     description="Get all permissions for the role",
+     *     tags={"Role"},
+     *     @SWG\Parameter(
+     *         description="Role ID",
+     *         name="id",
+     *         required=true,
+     *         in="path",
+     *         type="integer",
+     *         default="1"
+     *     ),
+     *     @SWG\Response(
+     *         response=200,
+     *         description="Role dat has been returned successfully!",
+     *     ),
+     *     @SWG\Response(
+     *         response=403,
+     *         description="No permission to get role permissions!",
+     *     ),
+     *     @SWG\Response(
+     *         response=404,
+     *         description="Role not found!",
+     *     )
+     * )
+     */
+    public function getPermissions(int $id)
+    {
+        $role = $this->getRoleService()->getPermissions($id);
+
+        return Fractal::item($role)
+            ->transformWith(new RoleTransformer)
+            ->withResourceName('Role')
+            ->parseIncludes('permissions');
+    }
+
+    /**
+     * @SWG\Post(
+     *     path="/roles/{roleId}/permissions/{permissionId}",
+     *     description="Attach permission to the role",
+     *     tags={"Role"},
+     *     @SWG\Parameter(
+     *         description="Role ID",
+     *         name="roleId",
+     *         required=true,
+     *         in="path",
+     *         type="integer",
+     *         default="2"
+     *     ),
+     *     @SWG\Parameter(
+     *         description="Permission ID",
+     *         name="permissionId",
+     *         required=true,
+     *         in="path",
+     *         type="integer",
+     *         default="1"
+     *     ),
+     *     @SWG\Response(
+     *         response=200,
+     *         description="Permission has been added to role successfully!",
+     *     ),
+     *     @SWG\Response(
+     *         response=403,
+     *         description="No permission to attach permission to role!",
+     *     ),
+     *     @SWG\Response(
+     *         response=404,
+     *         description="Role or Permission not found!",
+     *     ),
+     * )
+     */
+    public function attachPermission(int $roleId, int $permissionId)
+    {
+        $role = $this->getRoleService()->attachPermission($roleId, $permissionId);
+
+        return Fractal::item($role)
+            ->transformWith(new RoleTransformer)
+            ->withResourceName('Role')
+            ->parseIncludes('permissions');
+    }
+
+    /**
+     * @SWG\Delete(
+     *     path="/roles/{roleId}/permissions/{permissionId}",
+     *     description="Detach a permission to the role",
+     *     tags={"Role"},
+     *     @SWG\Parameter(
+     *         description="Role ID",
+     *         name="roleId",
+     *         required=true,
+     *         in="path",
+     *         type="integer",
+     *         default="2"
+     *     ),
+     *     @SWG\Parameter(
+     *         description="Permission ID",
+     *         name="permissionId",
+     *         required=true,
+     *         in="path",
+     *         type="integer",
+     *         default="1"
+     *     ),
+     *     @SWG\Response(
+     *         response=200,
+     *         description="Permission has been removed from the role successfully!",
+     *     ),
+     *     @SWG\Response(
+     *         response=403,
+     *         description="No permission to detach permission from role!",
+     *     ),
+     *     @SWG\Response(
+     *         response=404,
+     *         description="Role or Permission not found!",
+     *     ),
+     * )
+     */
+    public function detachPermission(int $roleId, int $permissionId)
+    {
+        $role = $this->getRoleService()->detachPermission($roleId, $permissionId);
+
+        return Fractal::item($role)
+            ->transformWith(new RoleTransformer)
+            ->withResourceName('Role')
+            ->parseIncludes('permissions');
     }
 }

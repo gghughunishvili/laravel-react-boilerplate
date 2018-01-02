@@ -29,14 +29,14 @@ $permissions['permission']['find'] = 8;
 // User
 $permissions['user']['create'] = 9;
 $permissions['user']['update'] = 10;
-$permissions['user']['get'] = 11;
-$permissions['user']['find'] = 12;
-$permissions['user']['delete'] = 13;
-$permissions['user']['find-permissions-for'] = 14;
-$permissions['user']['attach-permisssion-to'] = 15;
-$permissions['user']['detach-permisssion-from'] = 16;
-$permissions['user']['attach-role-to'] = 17;
-$permissions['user']['detach-role-from'] = 18;
-
+$permissions['user']['update-any'] = 11;
+$permissions['user']['update-status-of'] = 12;
+$permissions['user']['get'] = 13;
+$permissions['user']['get-any'] = 14;
+$permissions['user']['find'] = 15;
+$permissions['user']['delete'] = 16;
+$permissions['user']['find-roles-for'] = 17;
+$permissions['user']['attach-role-to'] = 18;
+$permissions['user']['detach-role-from'] = 19;
 
 return $permissions;

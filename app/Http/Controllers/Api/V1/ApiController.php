@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers\Api\V1;
 
-use App\Services\RoleService;
 use App;
+use App\Services\PermissionService;
+use App\Services\RoleService;
+use App\Services\UserService;
 use App\Traits\MyResponseTrait;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Bus\DispatchesJobs;
@@ -47,5 +49,13 @@ abstract class ApiController extends BaseController
 
     public function getRoleService() {
         return App::make(RoleService::class);
+    }
+
+    public function getPermissionService() {
+        return App::make(PermissionService::class);
+    }
+
+    public function getUserService() {
+        return App::make(UserService::class);
     }
 }
