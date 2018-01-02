@@ -2,6 +2,10 @@
 
 namespace App\Http\Controllers\Api\V1;
 
+use App;
+use App\Services\PermissionService;
+use App\Services\RoleService;
+use App\Services\UserService;
 use App\Traits\MyResponseTrait;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Bus\DispatchesJobs;
@@ -22,15 +26,6 @@ use Illuminate\Routing\Controller as BaseController;
  *             email="g.ghughunishvili@gmail.com"
  *         ),
  *     ),
- *     @SWG\Definition(
- *         definition="Error",
- *         required={"error"},
- *         @SWG\Property(
- *             property="error",
- *             type="string",
- *             default="message",
- *         ),
- *     ),
  *     security={
  *          {"api_key": {}}
  *     }
@@ -49,10 +44,22 @@ use Illuminate\Routing\Controller as BaseController;
  * ),
  * @SWG\Tag(
  *   name="Permission",
- *   description="Management of permissions, with their all endpoints"
+ *   description="Management of permissions' endpoints"
  * ),
  */
 abstract class ApiController extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests, MyResponseTrait;
+
+    public function getRoleService() {
+        return App::make(RoleService::class);
+    }
+
+    public function getPermissionService() {
+        return App::make(PermissionService::class);
+    }
+
+    public function getUserService() {
+        return App::make(UserService::class);
+    }
 }

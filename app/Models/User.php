@@ -2,17 +2,20 @@
 
 namespace App\Models;
 
+use App\Exceptions\ForbiddenException;
+use App\Traits\ModelTrait;
 use App\Traits\UuidTrait;
+use Hash;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use Silber\Bouncer\Database\HasRolesAndAbilities;
 use Laravel\Passport\HasApiTokens;
-use Hash;
+use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable
 {
     use HasApiTokens, Notifiable, UuidTrait;
-    use HasRolesAndAbilities;
+    use HasRoles;
+    use ModelTrait;
 
     /**
      * Indicates if the IDs are auto-incrementing.
@@ -57,5 +60,12 @@ class User extends Authenticatable
                 $query->orWhere('email', $identifier)
                     ->orWhere('username', $identifier);
             })->first();
+    }
+
+    public function should($permission)
+    {
+        if (!$this->hasPermissionTo($permission)) {
+            throw new ForbiddenException("User doesn't have permission to: " . $permission);
+        }
     }
 }

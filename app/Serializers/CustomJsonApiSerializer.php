@@ -1,14 +1,5 @@
 <?php
 
-/*
- * This file is part of the League\Fractal package.
- *
- * (c) Phil Sturgeon <me@philsturgeon.uk>
- *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
- */
-
 namespace App\Serializers;
 
 use InvalidArgumentException;
@@ -43,12 +34,11 @@ class CustomJsonApiSerializer extends ArraySerializer
     public function collection($resourceKey, array $data)
     {
         $resources = [];
-
         foreach ($data as $resource) {
-            $resources[] = $this->item($resourceKey, $resource);
+            $resources[] = $this->item($resourceKey, $resource)['data'];
         }
 
-        return $resources;
+        return ['data' => $resources];
     }
 
     /**
@@ -63,22 +53,32 @@ class CustomJsonApiSerializer extends ArraySerializer
     {
         $id = $this->getIdFromData($data);
 
-        $resource = ['type' => $resourceKey] + $data;
+        $resource = [
+            'data' => [
+                'type' => $resourceKey,
+                'id' => "$id",
+                'attributes' => $data,
+            ],
+        ];
 
-        if (isset($resource['links'])) {
+        unset($resource['data']['attributes']['id']);
+
+        if (isset($resource['data']['attributes']['links'])) {
             $custom_links = $data['links'];
+            unset($resource['data']['attributes']['links']);
         }
 
-        if (isset($resource['meta'])) {
-            $resource['meta'] = $data['meta'];
+        if (isset($resource['data']['attributes']['meta'])) {
+            $resource['data']['meta'] = $data['meta'];
+            unset($resource['data']['attributes']['meta']);
         }
 
         if ($this->shouldIncludeLinks()) {
-            $resource['links'] = [
+            $resource['data']['links'] = [
                 'self' => "{$this->baseUrl}/$resourceKey/$id",
             ];
             if (isset($custom_links)) {
-                $resource['links'] = array_merge($custom_links, $resource['links']);
+                $resource['data']['links'] = array_merge($custom_links, $resource['data']['links']);
             }
         }
 
@@ -94,13 +94,13 @@ class CustomJsonApiSerializer extends ArraySerializer
      */
     public function paginator(PaginatorInterface $paginator)
     {
-        $currentPage = (int) $paginator->getCurrentPage();
-        $lastPage = (int) $paginator->getLastPage();
+        $currentPage = (int)$paginator->getCurrentPage();
+        $lastPage = (int)$paginator->getLastPage();
 
         $pagination = [
-            'total' => (int) $paginator->getTotal(),
-            'count' => (int) $paginator->getCount(),
-            'per_page' => (int) $paginator->getPerPage(),
+            'total' => (int)$paginator->getTotal(),
+            'count' => (int)$paginator->getCount(),
+            'per_page' => (int)$paginator->getPerPage(),
             'current_page' => $currentPage,
             'total_pages' => $lastPage,
         ];
@@ -137,11 +137,6 @@ class CustomJsonApiSerializer extends ArraySerializer
         }
 
         $result['meta'] = $meta;
-
-        if (array_key_exists('pagination', $result['meta'])) {
-            $result['links'] = $result['meta']['pagination']['links'];
-            unset($result['meta']['pagination']['links']);
-        }
 
         return $result;
     }

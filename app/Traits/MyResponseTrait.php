@@ -139,6 +139,16 @@ trait MyResponseTrait
     }
 
     /**
+     * Unauthorized response
+     * @param      string $message The message
+     * @return     json  ( description_of_the_return_value )
+     */
+    public function respondErrorWithSingleValidationMessage($message = "")
+    {
+        return $this->setStatusCode(422)->respond($message);
+    }
+
+    /**
      * For internal error
      * @param      string $message The message
      * @return     json  ( returns json data)
