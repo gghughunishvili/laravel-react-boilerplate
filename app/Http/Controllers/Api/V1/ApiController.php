@@ -26,9 +26,6 @@ use Illuminate\Routing\Controller as BaseController;
  *             email="g.ghughunishvili@gmail.com"
  *         ),
  *     ),
- *     security={
- *          {"api_key": {}}
- *     }
  * )
  * @SWG\Tag(
  *   name="Auth",
