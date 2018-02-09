@@ -74,6 +74,11 @@ class Validator
         return $this->paramsBag;
     }
 
+    public function validate()
+    {
+        $this->validateResolved();
+    }
+
     /**
      * Handle a failed authorization attempt.
      *
