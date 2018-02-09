@@ -2,7 +2,7 @@
 
 namespace App\Traits;
 
-use App\Helpers\Uuid;
+use Illuminate\Support\Str;
 
 trait UuidTrait
 {
@@ -15,13 +15,13 @@ trait UuidTrait
 
         static::creating(function ($model) {
             if (!$model->{$model->getKeyName()}) {
-                $model->{$model->getKeyName()} = Uuid::generate();
+                $model->{$model->getKeyName()} = (string) Str::uuid();
             }
         });
 
         static::saving(function ($model) {
             if (!$model->{$model->getKeyName()}) {
-                $model->{$model->getKeyName()} = Uuid::generate();
+                $model->{$model->getKeyName()} = (string) Str::uuid();
             }
         });
     }
