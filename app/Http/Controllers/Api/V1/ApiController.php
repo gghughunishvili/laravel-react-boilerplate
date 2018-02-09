@@ -26,6 +26,9 @@ use Illuminate\Routing\Controller as BaseController;
  *             email="g.ghughunishvili@gmail.com"
  *         ),
  *     ),
+ *     security={
+ *          {"passport": {}}
+ *     }
  * )
  * @SWG\Tag(
  *   name="Auth",
