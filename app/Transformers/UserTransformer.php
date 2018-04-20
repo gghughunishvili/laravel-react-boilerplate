@@ -23,6 +23,8 @@ class UserTransformer extends TransformerAbstract
             'username' => (string) $user->username,
             'email' => (string) $user->email,
             'status' => (string) $user->status,
+            'createdAt' => (string) $user->created_at,
+            'updatedAt' => (string) $user->updated_at,
         ];
 
         return $data;
