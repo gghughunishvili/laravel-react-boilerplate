@@ -2,7 +2,9 @@
 
 namespace App\Validators;
 
+use App\Exceptions\ValidationException;
 use Illuminate\Auth\Access\AuthorizationException;
+use Illuminate\Contracts\Validation\Validator as IlluminateValidator;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidatesWhenResolvedTrait;
 use Validator as BaseValidator;
@@ -89,5 +91,18 @@ class Validator
     protected function failedAuthorization()
     {
         throw new AuthorizationException('This action is unauthorized.');
+    }
+
+    /**
+     * Handle a failed validation attempt.
+     *
+     * @param  \Illuminate\Validation\Validator  $validator
+     * @return void
+     *
+     * @throws \Illuminate\Validation\ValidationException
+     */
+    protected function failedValidation(IlluminateValidator $validator)
+    {
+        throw new ValidationException($validator->errors());
     }
 }
