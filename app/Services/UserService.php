@@ -72,6 +72,7 @@ class UserService extends AppService
      */
     public function update(string $id, UpdateValidator $validator)
     {
+        $validator->validate();
         $params = $validator->getParamsBag();
         $user = User::GetExistingModel($id);
 
