@@ -221,8 +221,8 @@ class UserController extends ApiController
 
     /**
      * @SWG\Get(
-     *     path="/users/me",
-     *     description="Get authorized user",
+     *     path="/users/authenticated",
+     *     description="Get authenticated user",
      *     tags={"User"},
      *     @SWG\Response(
      *         response=200,
@@ -234,7 +234,7 @@ class UserController extends ApiController
      *     )
      * )
      */
-    public function me()
+    public function authenticated()
     {
         $user = $this->getUserService()->authorizedUser();
 
