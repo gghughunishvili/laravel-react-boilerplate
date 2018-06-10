@@ -3,6 +3,7 @@
 namespace App\Validators\User;
 
 use App\Validators\Validator;
+use Illuminate\Validation\Rule;
 
 class UpdateValidator extends Validator
 {
