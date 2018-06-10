@@ -24,7 +24,7 @@ Route::group(['prefix' => 'v1', 'namespace' => 'Api\V1'], function ()
         Route::patch('oauth/token', 'AccessTokenController@revokeToken')->name("api::oauth::logout");
 
         // Users
-        Route::get('users/me', 'UserController@me');
+        Route::get('users/authenticated', 'UserController@authenticated');
         Route::get('users/{id}', 'UserController@get');
         Route::get('users', 'UserController@find');
         Route::delete('users/{id}', 'UserController@delete');
